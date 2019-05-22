@@ -28,13 +28,16 @@ const isLeader = () => {
 let lastLeader = null
 
 export const onBecomeLeader = callback => {
-  let intervalHandle = null
   const check = () => {
     if (isLeader()) {
-      Meteor.clearInterval(intervalHandle)
       callback()
+    } else {
+      console.log(
+        'not leeader, checking again. Currrent leader is ',
+        getCurrentLeader()
+      )
+      Meteor.setTimeout(check, CHECK_INTERVAL)
     }
   }
   check()
-  intervalHandle = Meteor.clearInterval(check, CHECK_INTERVAL)
 }

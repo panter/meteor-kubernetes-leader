@@ -2,7 +2,8 @@ Package.describe({
   name: 'panter:kubernetes-leader',
   version: '0.0.1',
   // Brief, one-line summary of the package.
-  summary: '',
+  summary:
+    'Find out which of your pods is the leader in a kubernetes setup. It assumes that you have a k8s.gcr.io/leader-elector sidecar container',
   // URL to the Git repository containing the source code for this package.
   git: '',
   // By default, Meteor will default to using README.md for documentation.

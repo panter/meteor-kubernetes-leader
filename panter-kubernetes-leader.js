@@ -32,10 +32,6 @@ export const onBecomeLeader = callback => {
     if (isLeader()) {
       callback()
     } else {
-      console.log(
-        'not leeader, checking again. Currrent leader is ',
-        getCurrentLeader()
-      )
       Meteor.setTimeout(check, CHECK_INTERVAL)
     }
   }

@@ -4,9 +4,9 @@ import { Meteor } from 'meteor/meteor'
 const LEADER_HOST = 'http://localhost:4040'
 const CHECK_INTERVAL = 5000
 
-export const getHostname = () => process.env.HOSTNAME
+const getHostname = () => process.env.HOSTNAME
 
-export const getCurrentLeader = () => {
+const getCurrentLeader = () => {
   try {
     if (Meteor.isDevelopment) {
       return process.env.HOSTNAME
@@ -20,22 +20,21 @@ export const getCurrentLeader = () => {
   }
 }
 
-export const isLeader = () => {
+const isLeader = () => {
   const leader = getCurrentLeader()
   return getHostname() === leader
 }
 
 let lastLeader = null
-export const onLeaderChange = callback => {
-  const call = () => {
-    const leader = getCurrentLeader()
-    const isLeader = getHostname() === leader
-    if (leader !== lastLeader) {
-      callback(isLeader, { leader, lastLeader, hostname: getHostname() })
-      lastLeader = leader
+
+export const onBecomeLeader = callback => {
+  let intervalHandle = null
+  const check = () => {
+    if (isLeader()) {
+      Meteor.clearInterval(intervalHandle)
+      callback()
     }
   }
-
-  call()
-  Meteor.setInterval(call, CHECK_INTERVAL)
+  check()
+  intervalHandle = Meteor.clearInterval(check, CHECK_INTERVAL)
 }

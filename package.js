@@ -15,10 +15,3 @@ Package.onUse(function(api) {
   api.use('ecmascript')
   api.mainModule('panter-kubernetes-leader.js', 'server')
 })
-
-Package.onTest(function(api) {
-  api.use('ecmascript')
-  api.use('tinytest')
-  api.use('panter-kubernetes-leader')
-  api.mainModule('panter-kubernetes-leader-tests.js')
-})
